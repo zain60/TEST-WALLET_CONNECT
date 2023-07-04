@@ -7,9 +7,14 @@ import {
 } from "@web3modal/ethereum";
 import { Web3Modal } from "@web3modal/react";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { mainnet, polygonMumbai, sepolia } from "wagmi/chains";
+import {
+  polygonMumbai,
+  sepolia,
+  avalancheFuji,
+  bscTestnet,
+} from "wagmi/chains";
 
-const chains = [mainnet, polygonMumbai, sepolia];
+const chains = [polygonMumbai, sepolia, avalancheFuji, bscTestnet];
 const projectId = "304a5eb05d33ef9727d03d70ea493eb6";
 
 const { publicClient } = configureChains(chains, [w3mProvider({ projectId })]);

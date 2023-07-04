@@ -1,16 +1,48 @@
 import { Web3Button, Web3NetworkSwitch } from "@web3modal/react";
 import { getContract } from "@wagmi/core";
 import { useContractWrite, usePrepareContractWrite } from "wagmi";
+import { connect } from "@wagmi/core";
 
 import CustomButton from "./CustomButton";
 import { useAccount } from "wagmi";
 import abi from "../src/abi.js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getNetwork } from "@wagmi/core";
+import { switchNetwork } from "@wagmi/core";
 
 export default function HomePage() {
   const { address } = useAccount();
   const [name, setName] = useState("");
+  const [chainId, setChainId] = useState();
   console.log("Address", address);
+  const { chain } = getNetwork();
+
+  const changeNetwork = async () => {
+    let network = await switchNetwork({ chainId: 80001 });
+  };
+
+  useEffect(() => {
+    console.log({ chainId });
+    if (
+      chainId === undefined ||
+      (chainId !== 80001 &&
+        chainId !== 11155111 &&
+        chainId !== 43113 &&
+        chainId !== 97)
+    ) {
+      changeNetwork();
+    }
+  }, [chainId, address]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const { chain } = getNetwork();
+      setChainId(chain?.id);
+    }, 2000); // 2 seconds interval
+
+    // Clean up the interval on component unmount
+    return () => clearInterval(interval);
+  }, []);
 
   const contractAddress = "0x03aC27567b55022e6fB915B95131F2f2f44e44FE";
 
