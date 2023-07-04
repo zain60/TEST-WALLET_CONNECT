@@ -12,6 +12,8 @@ import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 
 import { InjectedConnector } from "wagmi/connectors/injected";
+import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
+import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [polygonMumbai, sepolia, avalancheFuji, bscTestnet],
@@ -25,18 +27,18 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
 const config = createConfig({
   autoConnect: true,
   connectors: [
-    // new CoinbaseWalletConnector({
-    //   chains,
-    //   options: {
-    //     projectId: "87764b77f1d0fdcff18687e178ef5fcd",
-    //   },
-    // }),
-    // new WalletConnectConnector({
-    //   chains,
-    //   options: {
-    //     projectId: "87764b77f1d0fdcff18687e178ef5fcd",
-    //   },
-    // }),
+    new CoinbaseWalletConnector({
+      chains,
+      options: {
+        projectId: "87764b77f1d0fdcff18687e178ef5fcd",
+      },
+    }),
+    new WalletConnectConnector({
+      chains,
+      options: {
+        projectId: "87764b77f1d0fdcff18687e178ef5fcd",
+      },
+    }),
     new InjectedConnector({
       autoConnect: false,
       chains,
