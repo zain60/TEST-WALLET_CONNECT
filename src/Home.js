@@ -22,7 +22,6 @@ export default function HomePage() {
   };
 
   useEffect(() => {
-    console.log({ chainId });
     if (
       chainId === undefined ||
       (chainId !== 80001 &&
@@ -39,21 +38,22 @@ export default function HomePage() {
       const { chain } = getNetwork();
       setChainId(chain?.id);
     }, 2000); // 2 seconds interval
-
-    // Clean up the interval on component unmount
     return () => clearInterval(interval);
   }, []);
 
   const contractAddress = "0x03aC27567b55022e6fB915B95131F2f2f44e44FE";
-
+  //  instance to call
   const contract = getContract({
     address: contractAddress,
     abi: abi,
   });
+  //  read contract name
   const getName = async () => {
     const name1 = await contract.read.name();
     setName(name1);
   };
+
+  // mint a token
 
   const { data, isLoading, isSuccess, write } = useContractWrite({
     address: contractAddress,
@@ -64,21 +64,11 @@ export default function HomePage() {
 
   return (
     <>
-      <Web3Button
-        connectedWalletId
-        icon="show"
-        label="Connect Wallet"
-        balance="show"
-      />
       <div>
         {" "}
         <Web3NetworkSwitch />
       </div>
-      <div color="blue">
-        {" "}
-        <h2> Connect walletbusing your own UI </h2>
-        <CustomButton />
-      </div>
+
       <div>
         <h1>Call smart contract read functions</h1>
 
