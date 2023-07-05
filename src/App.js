@@ -23,6 +23,7 @@ import {
 } from "@web3modal/ethereum";
 
 import Netwoks from "./Networks";
+import { NetworkSwitcher } from "./Networkswitcher";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [polygonMumbai, sepolia, avalancheFuji, bscTestnet],
@@ -44,21 +45,20 @@ const config = createConfig({
     }),
     new WalletConnectConnector({
       chains,
+      enableExplorer: false,
       options: {
         projectId: "87764b77f1d0fdcff18687e178ef5fcd",
       },
     }),
     new InjectedConnector({
-      autoConnect: false,
       chains,
       options: {
         projectId: "87764b77f1d0fdcff18687e178ef5fcd",
-        shimDisconnect: true,
       },
     }),
     new MetaMaskConnector({
+      autoConnect: false,
       options: {
-        shimDisconnect: true,
         UNSTABLE_shimOnConnectSelectAccount: true,
       },
     }),
@@ -83,13 +83,14 @@ export default function App() {
       <WagmiConfig config={config}>
         <Profile />
         <HomePage />
-        <Netwoks />
+        {/* <Netwoks /> */}
+        <NetworkSwitcher />
       </WagmiConfig>
-      {/* <Web3Modal
+      <Web3Modal
         projectId={"87764b77f1d0fdcff18687e178ef5fcd"}
         ethereumClient={ethereumClient}
         enableExplorer={true}
-      /> */}
+      />
     </>
   );
 }
