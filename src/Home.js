@@ -1,9 +1,6 @@
 import { Web3Button, Web3NetworkSwitch } from "@web3modal/react";
 import { getContract } from "@wagmi/core";
 import { useContractWrite, usePrepareContractWrite } from "wagmi";
-import { connect } from "@wagmi/core";
-
-import CustomButton from "./CustomButton";
 import { useAccount } from "wagmi";
 import abi from "../src/abi.js";
 import { useEffect, useState } from "react";
@@ -15,11 +12,12 @@ export default function HomePage() {
   const [name, setName] = useState("");
   const [chainId, setChainId] = useState();
   console.log("Address", address);
-  const { chain } = getNetwork();
+  const { chain, chains } = getNetwork();
 
   const changeNetwork = async () => {
     let network = await switchNetwork({ chainId: 80001 });
   };
+  console.log({ chains });
 
   useEffect(() => {
     if (
@@ -64,11 +62,6 @@ export default function HomePage() {
 
   return (
     <>
-      <div>
-        {" "}
-        <Web3NetworkSwitch />
-      </div>
-
       <div>
         <h1>Call smart contract read functions</h1>
 
