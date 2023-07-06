@@ -1,7 +1,7 @@
-import { Web3Button, Web3NetworkSwitch } from "@web3modal/react";
+import { Web3Button } from "@web3modal/react";
 import { getContract } from "@wagmi/core";
-import { useContractWrite, usePrepareContractWrite } from "wagmi";
-import { connect } from "@wagmi/core";
+import { useContractWrite } from "wagmi";
+// import { connect } from "@wagmi/core";
 
 import CustomButton from "./CustomButton";
 import { useAccount } from "wagmi";
@@ -101,7 +101,9 @@ export default function HomePage() {
   return (
     <>
       <div>
-        <Web3Button /> <Web3NetworkSwitch />
+        <CustomButton />
+        {/* <Web3Button />  */}
+        {/* <Web3NetworkSwitch /> */}
       </div>
 
       <div>

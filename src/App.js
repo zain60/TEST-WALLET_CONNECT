@@ -5,69 +5,31 @@ import {
   avalancheFuji,
   bscTestnet,
 } from "wagmi/chains";
-import { Profile } from "./Profile";
-import HomePage from "../src/Home.js";
+// import { Profile } from "./Profile";
+import HomePage from "./Home.js";
 import { Web3Modal } from "@web3modal/react";
 
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 
-import { InjectedConnector } from "wagmi/connectors/injected";
-import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
-import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
-import { MetaMaskConnector } from "@wagmi/core/connectors/metaMask";
 import {
   EthereumClient,
   w3mConnectors,
-  w3mProvider,
 } from "@web3modal/ethereum";
 
-import Netwoks from "./Networks";
 import { NetworkSwitcher } from "./Networkswitcher";
 
-const { chains, publicClient, webSocketPublicClient } = configureChains(
+const projectId = "304a5eb05d33ef9727d03d70ea493eb6";
+const apiKey = "_8PhvTy6Fmssg4aO-98l8WqQMTl_eyig"
+
+const { chains, publicClient } = configureChains(
   [polygonMumbai, sepolia, avalancheFuji, bscTestnet],
   [
-    alchemyProvider({ apiKey: "_8PhvTy6Fmssg4aO-98l8WqQMTl_eyig" }),
+    alchemyProvider({ apiKey }),
     publicProvider(),
   ]
 );
 
-// Set up wagmi config
-const config = createConfig({
-  autoConnect: true,
-  connectors: [
-    new CoinbaseWalletConnector({
-      chains,
-      options: {
-        projectId: "87764b77f1d0fdcff18687e178ef5fcd",
-      },
-    }),
-    new WalletConnectConnector({
-      chains,
-      enableExplorer: false,
-      options: {
-        projectId: "87764b77f1d0fdcff18687e178ef5fcd",
-      },
-    }),
-    new InjectedConnector({
-      chains,
-      options: {
-        projectId: "87764b77f1d0fdcff18687e178ef5fcd",
-      },
-    }),
-    new MetaMaskConnector({
-      autoConnect: false,
-      options: {
-        UNSTABLE_shimOnConnectSelectAccount: true,
-      },
-    }),
-  ],
-  publicClient,
-  webSocketPublicClient,
-});
-
-const projectId = "304a5eb05d33ef9727d03d70ea493eb6";
 
 const wagmiConfig = createConfig({
   autoConnect: false,
@@ -80,8 +42,10 @@ const ethereumClient = new EthereumClient(wagmiConfig, chains);
 export default function App() {
   return (
     <>
-      <WagmiConfig config={config}>
-        <Profile />
+    {wagmiConfig && 
+    <>
+     <WagmiConfig config={wagmiConfig}>
+        {/* <Profile /> */}
         <HomePage />
         {/* <Netwoks /> */}
         <NetworkSwitcher />
@@ -91,6 +55,9 @@ export default function App() {
         ethereumClient={ethereumClient}
         enableExplorer={true}
       />
+    </>
+    }
+     
     </>
   );
 }

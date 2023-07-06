@@ -1,5 +1,5 @@
 import { useWeb3Modal } from "@web3modal/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAccount, useDisconnect } from "wagmi";
 
 export default function CustomButton() {
@@ -24,6 +24,9 @@ export default function CustomButton() {
       onOpen();
     }
   }
+useEffect(() => {
+  onClick()
+}, [])
 
   return (
     <button onClick={onClick} disabled={loading}>
