@@ -24,9 +24,6 @@ export default function CustomButton() {
       onOpen();
     }
   }
-useEffect(() => {
-  onClick()
-}, [])
 
   return (
     <button onClick={onClick} disabled={loading}>
